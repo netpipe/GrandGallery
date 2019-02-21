@@ -1,0 +1,111 @@
+ 
+ffmpeg -i video.mp4  -r 5 'frames/frame-%03d.jpg'
+
+
+wget -O opengl-rotating-triangle.mp4 https://github.com/cirosantilli/media/blob/master/opengl-rotating-triangle.mp4?raw=true
+ulimit -Sv 1000000
+ffmpeg \
+  -i opengl-rotating-triangle.mp4 \
+  -r 15 \
+  -vf scale=512:-1 \
+  -ss 00:00:03 -to 00:00:06 \
+  opengl-rotating-triangle.gif
+  
+  
+  ulimit -Sv 1000000: set a maximum 1Gb memory size for the program.
+  
+  -ss 00:00:03 -to 00:00:06: start and end time to cut the video from.
+  -vf scale=512:-1: make the output 512 pixels in height, and adjust width to maintain the aspect ratio.
+  
+  -r 15: sampling FPS.
+  
+  
+  ffmpeg -i input.mp4 -r 10 -f image2pipe -vcodec ppm - | \
+  convert -delay 5 -loop 0 - output.gif
+  
+  
+      gifify video.mp4 -o video.gif
+      
+          gifify clip.mp4 -o clip.gif --from 01:48:23.200 --to 01:48:25.300 --text 'we are the knights who say nip!'
+          
+          
+          
+        https://stackoverflow.com/questions/3007253/send-post-xml-file-using-curl-command-line
+           $ curl -X POST -d @myfilename http://user:pass@myhost/hudson/job/_jobName_/postBuildResult
+           
+           curl -F file=@/some/file/on/your/local/disk http://localhost:8080
+           curl -F password=@/etc/passwd www.mypasswords.com
+          The format file=@- is helpful if you want to pipe your file in.
+          
+          curl --form name=myfileparam --form file=@/local/path/to/your/file.xml \
+  -Fjson='{"parameter": {"name": "myfileparam", "file": "file"}}' \
+  -Fsubmit=Build \
+  http://user:password@jenkinsserver/job/jobname/build
+  
+  
+  If you are using curl on Windows:
+  curl -H "Content-Type: application/xml" -d "<?xml version="""1.0""" encoding="""UTF-8""" standalone="""yes"""?><message><sender>Me</sender><content>Hello!</content></message>" http://localhost:8080/webapp/rest/hello
+  
+  
+  
+  
+  
+  curl -i -X POST -H "Content-Type: text/xml" -d             ^
+"^<?xml version=\"1.0\" encoding=\"UTF-8\" ?^>                ^
+    ^<Transaction^>                                           ^
+        ^<SomeParam1^>Some-Param-01^</SomeParam1^>            ^
+        ^<Password^>SomePassW0rd^</Password^>                 ^
+        ^<Transaction_Type^>00^</Transaction_Type^>           ^
+        ^<CardHoldersName^>John Smith^</CardHoldersName^>     ^
+        ^<DollarAmount^>9.97^</DollarAmount^>                 ^
+        ^<Card_Number^>4111111111111111^</Card_Number^>       ^
+        ^<Expiry_Date^>1118^</Expiry_Date^>                   ^
+        ^<VerificationStr2^>123^</VerificationStr2^>          ^
+        ^<CVD_Presence_Ind^>1^</CVD_Presence_Ind^>            ^
+        ^<Reference_No^>Some Reference Text^</Reference_No^>  ^
+        ^<Client_Email^>john@smith.com^</Client_Email^>       ^
+        ^<Client_IP^>123.4.56.7^</Client_IP^>                 ^
+        ^<Tax1Amount^>^</Tax1Amount^>                         ^
+        ^<Tax2Amount^>^</Tax2Amount^>                         ^
+    ^</Transaction^>                                          ^
+" "http://localhost:8080"
+
+
+          
+          
+          $target_path = ROOT.'/upload/';
+
+$tmp_name = $_FILES['upload']['tmp_name'];
+$filename = $_FILES['upload']['name'];
+$target_file = $target_path.$filename;
+$num = $_POST['num'];
+$num_chunks = $_POST['num_chunks'];
+
+move_uploaded_file($tmp_name, $target_file.$num);
+
+// count ammount of uploaded chunks
+$chunksUploaded = 0;
+for ( $i = 1, i <= $num; $i++ ) {
+    if ( file_exists( $target_file.$i ) ) {
+         ++$chunksUploaded;
+    }
+}
+
+// and THAT's what you were asking for
+// when this triggers - that means your chunks are uploaded
+if ($chunksUploaded === $num_chunks) {
+
+    /* here you can reassemble chunks together */
+    for ($i = 1; $i <= $num_chunks; $i++) {
+
+      $file = fopen($target_file.$i, 'rb');
+      $buff = fread($file, 2097152);
+      fclose($file);
+
+      $final = fopen($target_file, 'ab');
+      $write = fwrite($final, $buff);
+      fclose($final);
+
+      unlink($target_file.$i);
+    }
+}
