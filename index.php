@@ -5,7 +5,7 @@
 <meta name="Keywords" content="keywords" /><meta name="Description" content="so much fun you'll forget to..." />
 <!--ZOOMRESTART-->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta http-equiv="refresh" content="30">
+<!--         <meta http-equiv="refresh" content="50"> -->
 <style type="text/css" media="screen, projection">
 @import "style.css";
 </style>
@@ -53,26 +53,31 @@
         
 function rendervideo($file){
  echo '<div style="margin-left:30px;">';
-    echo '<div style="background-color:grey;height:200px;float:left;width:300px;">';
+    echo '<div style="background-color:#c1c1c1;height:200px;float:left;border:2px black solid;width:330px;">';
+        echo '<div style="margin-left:  background-color:black;margin:2px">';
         
-        echo '<div style="width:30%; text-align:center; float:left; clear:both;background-color:#546070;height:20px;">';
-            // echo $file;
+        echo '<div style="width:10%; text-align:center; float:left;background-color:black;height:20px;">';
         echo '</div>';
         
-        echo '<div style="width:30%; text-align:center; float:left;background-color:#5C6776;height:20px;">';
+        echo '<div style="width:80%; text-align:center; float:left;background-color:#5C6776;height:20px;">';
                 echo $file;
         echo '</div>';
-                echo '<div style="width:30%; text-align:center; float:left;background-color:#3A455B;height:20px;">';
-                //echo $file;
+        
+        echo '<div style="width:10%; text-align:center; float:left;background-color:#3A455B;height:20px;">';
         echo '</div>';
         
+       // echo '<div style="clear: both;vertical-align: middle;width:auto;height:auto" >';
+            echo '<div style="margin-left:13px;width:auto;height:auto" >';
            // echo '<video controls  style="clear:both;" poster="title_anouncement.jpg" width="250">';
-            echo '<video controls style="clear:both;" preload="none" loop="1" poster="title_anouncement.jpg" width="300">';
-            echo '<source src="'.$file.'"' .'type="video/webm";codecs="vp8, vorbis" />'; 
-          //  echo "enlarge video after play to see better"
-            echo '</video>';
+                echo '<video controls style="" preload="none" loop="1" poster="title_anouncement.jpg" width="300">';
+                echo '<source src="'.$file.'"' .'type="video/webm";codecs="vp8, vorbis" />'; 
+            //  echo "enlarge video after play to see better"
+                echo '</video>';
             echo '</div>';
-             echo '</div>';
+            
+       echo '</div>';
+   echo '</div>';
+echo '</div>';
         /*
         <h3>This is a heading</h3>
         <p>This is a paragraph.</p>
@@ -81,12 +86,10 @@ function rendervideo($file){
                 //   echo rand(1, 10)."\n";
         //  echo rand(1, 10)."<br>";
         */
-            
-            
         }  
 
         
-        echo '<div style="background-color:green">';
+        echo '<div style="background-color:green; margin:20px" >';
         rendervideo("test.webm");
         rendervideo("test.webm"); 
         rendervideo("test.webm"); 
@@ -102,34 +105,19 @@ function rendervideo($file){
 //         rendervideo("test.webm");  
 //        rendervideo("test.webm");  
 //        rendervideo("test.webm");  
- 
-
-        echo '</div>';
-        
-        
+        echo '</div>';        
       ?>
       
 
 	<div id="body" style="clear:both;border:1px black solid;background:white">
 		<h1>VideoHost</h1><br>
-		<p>Under Construction - Check back soon.
 		<img src="const.gif" /><br><br>
-		<abbr title="U">WIKI - comming soon</abbr></p>
+		<abbr title="U">WIKI - comming soon</abbr>
 		<h2>under Construction</h2>
 	</div>
 	
 <br/>
 
-<?php 
-        //------ Counter -----------------------------------
-        define("_BBC_PAGE_NAME", "index");
-        define("_BBCLONE_DIR", "./bbclone/");
-        define("COUNTER", _BBCLONE_DIR."mark_page.php");
-        if (is_readable(COUNTER)) include_once(COUNTER);
- ?>
-
-
-    <div class="footer"><h1></h1><a href="./bbclone/">Stats </a><h1></h1></div>
   </div>
  </div>
 </body>
