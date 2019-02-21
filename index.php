@@ -18,8 +18,8 @@
 <body style="background:#414141">
  <div id="wrapper">
   <div id="body">
-    <div align="center" style="border:2px black solid;background: url('www.test.com');height:100%;width:100%;background:white;">
-        <img src="logo/logo3.png" width="1000px" />
+    <div align="center" style="background-color:black;border:2px black solid;background: url('www.test.com');height:100%;width:100%;background:white;">
+        <img src="data/logo/logo3.png" width="1000px" />
     </div><!--logo-->
 	<div>
 	 <ul id="TJK_dropDownMenu">
