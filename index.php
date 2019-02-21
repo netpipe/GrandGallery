@@ -73,7 +73,7 @@ function rendervideo($file){
        // echo '<div style="clear: both;vertical-align: middle;width:auto;height:auto" >';
                 echo '<div style="margin:20px;width:auto;height:auto" >';
                  // echo '<video controls  style="clear:both;" poster="title_anouncement.jpg" width="250">';
-                    echo '<video controls style="" preload="none" loop="1" poster="title_anouncement.jpg" width="300">';
+                    echo '<video controls style="" preload="none" loop="1" poster="play.png" width="300">';
                         echo '<source src="'.$file.'"' .'type="video/webm";codecs="vp8, vorbis" />'; 
                     echo '</video>';
                 echo '</div>';
@@ -96,10 +96,10 @@ function rendervideo($file){
         
         
         $files = glob('uploads/*.{webm,jpg,png,gif}', GLOB_BRACE);
-foreach($files as $file) {
-//echo $file;
-rendervideo($file);
-}
+            foreach($files as $file) {
+            //echo $file;
+            rendervideo($file);
+        }
 //         $files = scandir('uploads/');
 //             foreach($files as $file) {
 //             //do your work here
