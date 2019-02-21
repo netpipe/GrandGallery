@@ -1,24 +1,29 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html xml:lang="en" lang="en">
 <head>
     <meta name="Keywords" content="keywords" /><meta name="Description" content="so much fun you'll forget to..." />
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="refresh" content="50"> <!--should be set higher for less traffic use DEVELOPMENT MODE-->
 
-
     <style type="text/css" media="screen, projection">
         @import "style.css";
     </style>
+    
     <title>GrandGallery</title>
+    
 </head>
+<!-- Remember to chmod 0755 uploads directory -->
+
+
 <!--body {
   background: lightblue url("img_tree.gif") no-repeat fixed center;
+  background-image: url('https://www.campaignmonitor.com/asse
 } -->
 <body style="background:#414141">
  <div id="wrapper">
   <div id="body">
-    <div align="center" style="background-color:black;border:2px black solid;background: url('www.test.com');height:100%;width:100%;background:white;">
+    <div align="center" style="background-color:#2D3851;border:2px black solid;height:100%;width:100%;">
         <img src="data/logo/logo3.png" width="1000px" />
     </div><!--logo-->
 	<div>
@@ -45,13 +50,16 @@
     <form action="upload.php" method="post" enctype="multipart/form-data">
         Select image to upload:
         <input type="file" name="fileToUpload" id="fileToUpload">
+        <input type="text" name="email" id="emailid">
         <input type="submit" value="Upload Image" name="submit">
     </form>
     
 
     
 <?php
-            
+
+//$sites="http://localhost:69/~netpipe/GrandGallery";
+
 //         include("upload.php");
         
         
@@ -64,7 +72,7 @@ function rendervideo($file){
         echo '</div>';
         
         echo '<div style="width:80%; text-align:center; float:left;background-color:#5C6776;height:20px;">';
-                echo $file;
+                echo '<a href="uploads/' . $file . '">' . $file . '</a>';
         echo '</div>';
         
         echo '<div style="width:10%; text-align:center; float:left;background-color:#3A455B;height:20px;">';
@@ -94,11 +102,18 @@ function rendervideo($file){
 
         echo '<div id="vbody" style="background-color:green; margin:20px;border:2px black solid;width:auto;height:auto" >';
         
+        $test=$_GET["page"];
+        //echo $test;
         
+        if  ( $_GET["page"] != "" ){
+           rendervideo($test);
+        
+        }else{
         $files = glob('uploads/*.{webm,jpg,png,gif}', GLOB_BRACE);
             foreach($files as $file) {
             //echo $file;
             rendervideo($file);
+        }
         }
 //         $files = scandir('uploads/');
 //             foreach($files as $file) {
@@ -111,7 +126,7 @@ function rendervideo($file){
        // rendervideo("test.webm");
        // } 
 
-      //  echo '</div>';  
+        echo '</div>';  
         
         
       ?>
