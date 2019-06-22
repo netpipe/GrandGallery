@@ -1,7 +1,7 @@
 <-- Style Drop Down Menu -->
 
-body {background:black;font-size:small;font-family:Georgia, "Times New Roman", Times, serif; url() repeat-x;}
-#wrapper{background:#2D3851;margin:auto;width:90%;border:10px black double;}
+body {background:#414141;font-size:small;font-family:Georgia, "Times New Roman", Times, serif;}
+#wrapper{background:#2D3851;margin:auto;width:90%;border-radius: 15px 15px 15px 15px;border:10px black double;}
 h1 {margin:0 0 10px 10px;line-height:2em;}
 h2 {border-left:10px solid #cc0;color:#c30;padding-left:10px;margin:20px 0 10px 10px;font-size:.9em}
 p {margin:5px 10px}
@@ -41,6 +41,7 @@ c30 orange
 	list-style-type:none;
 	font-weight:bold;
 	float:left;
+	position:relative;
 
 }
 /* sub-menu LIs */
@@ -55,7 +56,7 @@ c30 orange
 /* All anchors */
 #TJK_dropDownMenu li a {
 	cursor:default;
-	color:#555;
+	color:#c1c1c1;
 	border-left:1px solid #333;
 	text-decoration:none;
 	display:block;

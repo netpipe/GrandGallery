@@ -1,101 +1,130 @@
 <?php
-$target_dir = "uploads/";
-$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+
+//~ ini_set('display_startup_errors', 1);
+//~ ini_set('display_errors', 1);
+//~ error_reporting(-1);
+
+$file = basename($_FILES["fileToUpload"]["name"]);
+#$file = mb_strimwidth 	 ( $file , 0, 25, "-")  ;
+
+$target_mdir = "uploads/mov/";
+$target_pdir = "uploads/pic/";
+//$target_mfile = $target_mdir . basename($_FILES["fileToUpload"]["name"]);
+//$target_pfile = $target_mdir . basename($_FILES["fileToUpload"]["name"]);
+$target_mfile = $target_mdir . $file;
+$target_pfile = $target_pdir . $file;
+
 $uploadOk = 1;
-$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+$emailnotify=1;
 
 //check valid email
 
-//$_FILES[""]
+        $to = 'teslaenergy@gmail.com';
+        $subject = 'New Video GrandGallery';
+        $message = 'new video upload'; 
+        $from = 'admin@grandgallery.net';
+        
+//check valid email
+//$name = test_input($_POST["emailid"]);
+//function validateEMAIL($EMAIL) {
+    //$v = "/[a-zA-Z0-9_-.+]+@[a-zA-Z0-9-]+.[a-zA-Z]+/";
+	//https://stackoverflow.com/questions/12026842/how-to-validate-an-email-address-in-php
+   // return (bool)preg_match($v, $EMAIL);
+//}
+//$email = "john.doe@example.com";
 
+$email = $_POST["emailid"];
 
+if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  echo("$email is a valid email address<br>");
+} else {
+  echo("$email is not a valid email address<br>");
+}
+
+//~ $email = test_input($_POST["emailid"]);
+//~ function test_input($data) {
+  //~ $data = trim($data);
+  //~ $data = stripslashes($data);
+  //~ $data = htmlspecialchars($data);
+  //~ return $data;
+//~ }
+ 
 // Check if image file is a actual image or fake image
 if(isset($_POST["submit"])) {
-    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-    if($check !== false) {
-        echo "File is an image - " . $check["mime"] . ".";
+    $checkimage = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+    
+    if($checkimage != false) {
+        echo "File is an image - " . $checkimage["mime"] . "." . "<br>";
         $uploadOk = 1;
+        $target_file = $target_pfile;
     } else {
-       // echo "File is not an image.";
+        echo "File is not an image. <br> ";
         $uploadOk = 1;  // set to 1 because were uploading video too
+        $target_file = $target_mfile;
     }
 }
+
+ $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
 // Check if file already exists
 if (file_exists($target_file)) {
-    echo "Sorry, file already exists.";
+    echo "Sorry, file already exists.<br>";
     $uploadOk = 0;
 }
+
 // Check file size
-if ($_FILES["fileToUpload"]["size"] > 11500000) {
-    echo "Sorry, your file is too large.";
+if ($_FILES["fileToUpload"]["size"] > 510500000) {
+    echo "Sorry, your file is too large.<br>";
     $uploadOk = 0;
 }
+
 // Allow certain file formats
 if($imageFileType != "jpg" && $imageFileType != "webm" && $imageFileType != "png" && $imageFileType != "jpeg"
-&& $imageFileType != "gif" ) {
-    echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+&& $imageFileType != "gif" && $imageFileType != "JPG" && $imageFileType != "WEBM" && $imageFileType != "PNG" && $imageFileType != "JPEG"
+&& $imageFileType != "GIF" && $imageFileType != "XVID" && $imageFileType != "mov" && $imageFileType != "xvid" && $imageFileType != "AVI" ) {
+    echo "only xvid,mov,avi,WEBM-preferred,JPG, JPEG, PNG & GIF files are allowed.<br>";
     $uploadOk = 0;
 }
-// Check if $uploadOk is set to 0 by an error
-if ($uploadOk == 0) {
-    echo "Sorry, your file was not uploaded.";
-// if everything is ok, try to upload file
-} else {
-    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+
+ if ($uploadOk == 0) {
+	echo "Sorry, your file was not uploaded.";
+ } else {
+		
+	 if ( $checkimage == false ) {
+	  echo "Uploading Movie <br>";
+	   $name = preg_replace("/[^A-Z0-9._-]/i", "_", $target_file); // safe filename
+	  $uploaded = move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_mdir . $file);
+
+	 } else {	
+	  echo "Upload Picture";
+	  $uploaded = move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_pdir . $file);
+	 }
+ 
+	if ($uploaded == "1"){	
+        echo "The file ". $file. " has been uploaded.<br>";
+        
+        //write textfile with email address
+        //if(isset($_POST['emailid']){
+            $myfile = fopen("$target_file.txt", "w") or die("Unable to open file!<br>");
+            $txt = $_POST["emailid"];
+            echo $txt;
+            fwrite($myfile, $txt);
+            fclose($myfile);
+            
+
+    if ($emailnotify == "1"){        
+        // Sending email
+
+        if(mail($to, $subject, $message)){
+            echo '<br>Your mail has been sent successfully. <br>';
+        } else {
+            echo 'Unable to send email. Please try again.<br>';
+        }
+	}
+        
+      //  };
     } else {
-        echo "Sorry, there was an error uploading your file.";
+        echo "Sorry, there was an error uploading your file.<br>";
     }
 }
-?> 
-
-
-
-
-<?php
-/*
-define("UPLOAD_DIR", "./");
-define("ERROR", "STOP! Error time! I have no idea what caused this." )
-// The upload form
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-?>
-<form action="upload.php" method="post" enctype="multipart/form-data">
- <input type="file" name="myFile"/>
- <br/>
- <input type="submit" value="Upload"/>
-</form>
-
-<?php
-}
-// File upload action
-else if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_FILES["myFile"])) {
-    $myFile = $_FILES["myFile"];
-    if ($myFile["error"] !== UPLOAD_ERR_OK) {
-        echo $ERROR;
-        exit;
-    }
-    // Check the filename is safe
-    $name = preg_replace("/[^A-Z0-9._-]/i", "_", $myFile["name"]);
-    // Grab file from the temp dir
-    $success = move_uploaded_file($myFile["tmp_name"], UPLOAD_DIR . $name);
-    if (!$success) {
-        echo $ERROR;
-        exit;
-    }
-    echo "Uploaded file! <a href=$name>Click</a> to execute/view ";
-}
-
-<?PHP
-  if(!empty($_FILES['uploaded_file']))
-  {
-    $path = "uploads/";
-    $path = $path . basename( $_FILES['uploaded_file']['name']);
-    if(move_uploaded_file($_FILES['uploaded_file']['tmp_name'], $path)) {
-      echo "The file ".  basename( $_FILES['uploaded_file']['name']). 
-      " has been uploaded";
-    } else{
-        echo "There was an error uploading the file, please try again!";
-    }
-  }
-  */
 ?> 
