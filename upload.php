@@ -1,5 +1,5 @@
 <?php
-
+include("email.php");
 //~ ini_set('display_startup_errors', 1);
 //~ ini_set('display_errors', 1);
 //~ error_reporting(-1);
@@ -81,7 +81,7 @@ if ($_FILES["fileToUpload"]["size"] > 510500000) {
 // Allow certain file formats
 if($imageFileType != "jpg" && $imageFileType != "webm" && $imageFileType != "png" && $imageFileType != "jpeg"
 && $imageFileType != "gif" && $imageFileType != "JPG" && $imageFileType != "WEBM" && $imageFileType != "PNG" && $imageFileType != "JPEG"
-&& $imageFileType != "GIF" && $imageFileType != "XVID" && $imageFileType != "mov" && $imageFileType != "xvid" && $imageFileType != "AVI" ) {
+&& $imageFileType != "GIF" && $imageFileType != "XVID" && $imageFileType != "mov" && $imageFileType != "xvid" && $imageFileType != "AVI" && $imageFileType != "avi" && $imageFileType != "3gp" && $imageFileType != "3GP" ) {
     echo "only xvid,mov,avi,WEBM-preferred,JPG, JPEG, PNG & GIF files are allowed.<br>";
     $uploadOk = 0;
 }

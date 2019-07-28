@@ -1,3 +1,45 @@
+<?php
+$sitename="http://www.grandgallery.net";
+            $cookie_name = "user";
+            $cookie_value = "AgeVerified"; 
+            
+            
+        //GET PAGE CALLBACK
+        $page=$_GET["page"];
+       
+        // SET COOKIE
+        if  ( ($_POST['age'] == "agree") && $page == "setcookie" ){
+ 
+				//https://stackoverflow.com/questions/37630953/how-can-cookies-be-created-on-client-side-without-javascript
+				//	setcookie($cookie_name, $cookie_value, time()-3600);
+            setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day;
+            //setcookie($cookie_name,$cookie_value);
+					//	echo isset($_COOKIE[$cookie_name]);
+            if( !isset($_COOKIE[$cookie_name]) ) {
+                
+                echo "Cookie '" . $cookie_name . "' is set!<br>";
+                echo "Value is: " . $_COOKIE[$cookie_name];
+                
+
+            } else {
+                echo "Cookie named '" . $cookie_name . "' is not set!";
+             //   echo "cookie, set";
+            }
+
+            $other_Atrributes = "" ;
+            //echo 'window.open("index.php?page=ageverified", $other_Attributes)';
+            header("location: http://www.grandgallery.net") ;
+         }
+                 //REMOVE COOKIE
+        elseif  ( ($_COOKIE[$cookie_name] == "AgeVerified") && $page == "rmcookie" ){
+	
+				setcookie($cookie_name, "", time()-3600, "/");
+							unset($_COOKIE[$cookie_name]);
+				header("location:" . $sitename) ;
+				echo "cookie unset";
+        }       
+        ?>
+
 <!DOCTYPE html>
 <html xml:lang="en" lang="en">
 <head>
@@ -138,39 +180,9 @@ $sitename="http://www.grandgallery.net";
         echo '<div id="vbody" style="border-radius: 15px 15px 15px 15px;clear:both;text-align:center;background-color:green; margin:20px;border:2px black solid;" >';
         
         
-        //GET PAGE CALLBACK
-        $page=$_GET["page"];
-       
-        // SET COOKIE
-        if  ( ($_POST['age'] == "agree") && $page == "setcookie" ){
- 
-				//https://stackoverflow.com/questions/37630953/how-can-cookies-be-created-on-client-side-without-javascript
-				//	setcookie($cookie_name, $cookie_value, time()-3600);
-            setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day;
-
-					//	echo isset($_COOKIE[$cookie_name]);
-            if( !isset($_COOKIE[$cookie_name]) ) {
-             //   echo "Cookie named '" . $cookie_name . "' is not set!";
-                echo "cookie, set";
-            } else {
-                echo "Cookie '" . $cookie_name . "' is set!<br>";
-                echo "Value is: " . $_COOKIE[$cookie_name];
-            }
-
-            $other_Atrributes = "" ;
-            //echo 'window.open("index.php?page=ageverified", $other_Attributes)';
-            header("location: http://www.grandgallery.net") ;
-         }
-        //REMOVE COOKIE
-        elseif  ( ($_COOKIE[$cookie_name] == "AgeVerified") && $page == "rmcookie" ){
-				//unset($_COOKIE[$cookie_name]);
-				setcookie($cookie_name, "", time()-3600, "/");
-				header("location:" . $sitename) ;
-				echo "cookie unset";
-        }        
 
         // CONTACT
-        elseif  ( $page == "contact" && true){
+        if  ( $page == "contact" && true){
             echo '<a href="mailto:admin@grandgallery.net" > Email </a>';
          //   include ("user.php");
           // rendervideo($test);
@@ -278,7 +290,14 @@ $sitename="http://www.grandgallery.net";
 
         <i>adult games / video's / pictures and reading material<br>
         <br> running this site requires no javascript or flash<br><br></i>
-
+				<?php
+			echo '<div class="fling-minislide" syle="width:50px;">';
+               echo  '<img src="play.png" alt="Slide 4" />';
+              echo  '<img src="31.png" alt="Slide 3" />';
+              echo  '<img src="logo3.png" alt="Slide 2" />';
+              echo  '<img src="mainpage.png" alt="Slide 1" />';
+            echo  '</div>';
+                 ?>
 
 	</div>	<!-- footer --> 
 	
